@@ -1,9 +1,10 @@
 # aws-terra
 
-templates
+> templates for provisioning stuff on AWS with Terraform
 
-## Init
+## Usage
 
 ```sh
+cd templates/01
 ./run.sh
 ```
