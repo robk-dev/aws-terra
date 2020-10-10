@@ -1,9 +1,10 @@
+# random resources
 mkdir resources
 cd resources
 
 # public facing static site on bucket
 cat > bucket_site.tf <<EOF
-resource "aws_s3_bucket" "infra_bucket" {
+resource "aws_s3_bucket" "static_site" {
   bucket = "robk-bucket-site"
   acl    = "public-read"
   policy = "${file("policy.json")}"
