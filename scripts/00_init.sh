@@ -3,11 +3,11 @@ cd prod
 cat > prod.tf <<EOF
 provider "aws" {
   profile = "default"
-  region  = "us-west-2"
+  region  = "us-east-1"
 }
 
 resource "aws_s3_bucket" "prod_infra_bucket" {
-  bucket = "prod_infra_bucket"
+  bucket = "prod-infra-bucket"
   acl    = "private"
 }
 
@@ -34,8 +34,30 @@ resource "aws_security_group" "prod_web" {
     "Terraform": "true"
   }
 }
+
+resource "aws_instance" "prod_web" {
+  ami           = "ami-0708a0921e5eaf65d"
+  instance_type = "t2.nano"
+
+  vpc_security_group_ids = [
+    aws_security_group.prod_web.id
+  ]
+
+  tags = {
+    "Terraform": "true"
+  }  
+}
+
+resource "aws_eip" "prod_web" {
+  instance = aws_instance.prod_web.id
+
+  tags = {
+    "Terraform" = "true"
+  }
+}
 EOF
 # use actual IP address for cidr_blocks; ["0.0.0.0/0"] allows all traffic
 
+#t2.nano vs t2.micro
 terraform init
 terraform apply -auto-approve
