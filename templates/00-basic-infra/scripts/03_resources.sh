@@ -2,6 +2,8 @@
 mkdir resources
 cd resources
 
+aws ec2 describe-availability-zones --all-availability-zones
+
 # public facing static site on bucket
 cat > bucket_site.tf <<EOF
 resource "aws_s3_bucket" "static_site" {
@@ -32,7 +34,7 @@ resource "aws_security_group" "allow_tls" {
       from_port    = 443
       to_port      = 443
       protocol     = "tcp"
-      cidr_blocks  = ["1.2.3.4/32"]
+      cidr_blocks  = ["0.0.0.0/0", "1.2.3.4/32"]
   }
   egress {
       from_port    = 0
