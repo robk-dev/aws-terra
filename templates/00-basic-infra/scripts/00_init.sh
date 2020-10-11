@@ -1,6 +1,14 @@
 mkdir prod
 cd prod
 cat > prod.tf <<EOF
+terraform {
+  required_providers {
+    aws = {
+      source = "hashicorp/aws"
+    }
+  }
+}
+
 provider "aws" {
   profile = "default"
   region  = "us-east-1"
@@ -122,7 +130,7 @@ resource "aws_elb" "prod_web" {
   }
 }
 EOF
-# use actual IP address for cidr_blocks; ["0.0.0.0/0"] allows all traffic
+# use actual IP address for cidr_blocks; ["0.0.0.0/0"] allows traffic for all IPs
 
 #t2.nano vs t2.micro
 terraform init

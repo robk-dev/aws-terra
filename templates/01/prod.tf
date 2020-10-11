@@ -4,6 +4,9 @@ variable "env" {
 variable "whitelist" {
   type = list(string)
 }
+variable "region" {
+  type = string
+}
 variable "web_image_id" {
   type = string
 }
@@ -20,9 +23,17 @@ variable "web_min_size" {
   type = number
 }
 
+terraform {
+  required_providers {
+    aws = {
+      source = "hashicorp/aws"
+    }
+  }
+}
+
 provider "aws" {
   profile = "default"
-  region  = "us-east-1"
+  region  = var.region
 }
 
 resource "aws_s3_bucket" "prod_infra_bucket" {

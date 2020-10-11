@@ -1,4 +1,5 @@
 env                  = "production"
+region               = "us-east-1"
 whitelist            = ["0.0.0.0/0"]
 web_image_id         = "ami-0708a0921e5eaf65d"
 web_instance_type    = "t2.micro"
